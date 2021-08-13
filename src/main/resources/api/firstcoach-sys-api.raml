@@ -1,0 +1,75 @@
+#%RAML 1.0
+title: firstcoach-sys-api
+uses:
+  common: /libraries/common/common-library.raml
+securitySchemes:
+  basic: !include libraries/securityScheme.raml
+types:
+  getRoutes: !include libraries/routes/datatypes/getRoutes-200-dataType.raml
+  getSchedule: !include libraries/schedules/datatype/getSchedules-dataType.raml
+  commonError: !include libraries/common/datatypes/commonError-dataType.raml
+
+/{transportType}:
+  /{transportCompany}:
+    /routes:
+      get:
+        securedBy: [basic]
+        responses:
+          200:
+            body:
+              application/json:
+                type: getRoutes
+                example: !include libraries/routes/examples/getRoutes200-example.json
+          400:
+            body:
+              application/json:
+                type: commonError
+                example: !include libraries/common/examples/400Response.json
+          404:
+            body:
+              application/json:
+                type: commonError
+                example: !include libraries/common/examples/404Reponse.json
+          500:
+            body:
+              application/json:
+                type: commonError
+                example: !include libraries/common/examples/500Reponse.json  
+    /schedules:
+      get:
+        is:
+          - common.departureLocationCode
+          - common.destinationLocationCode
+        responses:
+              200:
+                body:
+                  application/json:
+                    type: getSchedule
+                    example: !include libraries/schedules/examples/getSchedules200-example.json
+              400:
+                body:
+                  application/json:
+                    type: commonError
+                    example: !include libraries/common/examples/400Response.json
+              404:
+                body:
+                  application/json:
+                    type: commonError
+                    example: !include libraries/common/examples/404Reponse.json
+              500:
+                body:
+                  application/json:
+                    type: commonError
+                    example: !include libraries/common/examples/500Reponse.json
+                      
+                      
+
+                      
+          
+                      
+                       
+    
+                      
+                  
+               
+              

@@ -1,0 +1,41 @@
+#%RAML 1.0 DataType
+type: object
+properties:
+  departureSchedules:
+    type: array
+    items:
+      type: object
+      properties:
+        availableSeats:
+          type: number
+          example: 20
+          required: true
+        departureDateTime:
+          type: string
+          example: "2019-04-30T16:41:41"
+          required: true
+        travelRoute:
+          type: object
+          properties:
+            destinationLocation:
+              type: object
+              properties:
+                locationCode:
+                  type: string
+                  example: "KLG-MY"
+                  required: true
+                locationDesc:
+                  type: string
+                  example: "Klang Malaysia"
+                  required: true
+            originLocation:
+              type: object
+              properties:
+                locationCode:
+                  type: string
+                  example: "BEN-SG"
+                  required: true
+                locationDesc:
+                  type: string
+                  example: "Beauna Vista Singapore"
+                  required: true

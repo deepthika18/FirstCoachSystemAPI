@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd 
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd 
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	
+	<http:listener-config name="firstcoach-sys-api-httpListenerConfig">
+        <http:listener-connection host="0.0.0.0" port="9082" />
+    </http:listener-config>
+    <apikit:config name="firstcoach-sys-api-config" api="firstcoach-sys-api.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+    <configuration-properties doc:name="Configuration properties" doc:id="e6d97bda-315e-4ba4-97c0-2ba381f3fabe" file="config.yaml" />
+	<api-gateway:autodiscovery apiId="16168533" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="39fbe23d-8549-4400-a319-dee11274a5c4" flowRef="get:\(transportType)\(transportCompany)\routes:firstcoach-sys-api-config" />
+	
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="fcd7f0da-f91d-4e2b-b354-16796051a5cb" >
+		<http:request-connection host="localhost" port="8083" />
+	</http:request-config>
+	
+	
+	</mule>

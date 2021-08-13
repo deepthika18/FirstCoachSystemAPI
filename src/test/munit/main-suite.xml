@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="main-suite.xml" />
+	<munit:test name="routes-Sub_Flow-test" doc:id="c4c8633e-b997-4bf0-afb2-7cf176064cf6" >
+		<munit:behavior >
+			<munit:set-event doc:name="Set Input" doc:id="36174e1e-bbfe-4e92-b82a-9b48710e7154" >
+				<munit:payload value="#[readUrl('classpath://routesSubFlowtest\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://routesSubFlowtest\set-event_attributes.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://routesSubFlowtest\set-event_variable_.dwl')]" />
+					<munit:variable key="transportCompany" value="#[output application/java --- readUrl('classpath://routesSubFlowtest\set-event_variable_1.dwl')]" encoding="UTF-8" mediaType="application/java" />
+					<munit:variable key="transportType" value="#[output application/java --- readUrl('classpath://routesSubFlowtest\set-event_variable_2.dwl')]" encoding="UTF-8" mediaType="application/java" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to routes-Sub_Flow" doc:id="77397a51-fef8-4c60-b167-7557588db4b3" name="routes-Sub_Flow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="3f0c69d7-bb1b-4d95-9525-cf1dd53d8aaa" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import routesSubFlowtest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+			<munit-tools:verify-call doc:name="Verify Request-to-externalsystem" doc:id="f7e1b96e-8e54-424e-b24a-25adeb877e26" processor="http:request" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="0d4cf075-079f-4d12-8a70-0ce6ab831890" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="Schedules-Sub_Flow-test" doc:id="343c23cb-f05b-4d4d-9ab6-fd3632894697" >
+		<munit:behavior >
+			<munit:set-event doc:name="Set Input" doc:id="fe457f59-b08e-460f-940b-ff3cb1eebf8b" >
+				<munit:payload value="#[readUrl('classpath://SchedulesSubFlowtest\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://SchedulesSubFlowtest\set-event_attributes.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://SchedulesSubFlowtest\set-event_variable_.dwl')]" />
+					<munit:variable key="transportCompany" value="#[output application/java --- readUrl('classpath://SchedulesSubFlowtest\set-event_variable_1.dwl')]" encoding="UTF-8" mediaType="application/java" />
+					<munit:variable key="transportType" value="#[output application/java --- readUrl('classpath://SchedulesSubFlowtest\set-event_variable_2.dwl')]" encoding="UTF-8" mediaType="application/java" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to Schedules-Sub_Flow" doc:id="3b0dcb2d-3857-4da6-b53b-d31bd53a0029" name="Schedules-Sub_Flow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="8b899dd0-19c4-4bb6-80ff-b96b095ce45a" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import SchedulesSubFlowtest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+			<munit-tools:verify-call doc:name="Verify Request-to-externalsystem" doc:id="558a809b-78ed-4ce8-ae98-ca2c95e8f8c1" processor="http:request" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="5fe819fc-b0f2-4b10-bcc1-cf901b46adcb" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

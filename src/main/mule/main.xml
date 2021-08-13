@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	
+	<sub-flow name="routes-Sub_Flow" doc:id="5154aeef-0025-4fbd-aaa8-e567f6eb8230" >
+		<http:request method="GET" doc:name="Request-to-externalsystem" doc:id="0d4cf075-079f-4d12-8a70-0ce6ab831890" config-ref="HTTP_Request_configuration" path="${requester.routepath}"/>
+		<ee:transform doc:name="JSON output from externalsystem" doc:id="dea7bc0a-ffb5-4447-8c71-677de2f37e59" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload map(value,index)->
+[
+  {
+    "originLocation": {
+      "locationCode": value.departureLocationCode
+    },
+    "destinationLocation": {
+      "locationCode": value.arrivalLocationCode
+    }
+  }
+]]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="JSON output from externalsystem" doc:id="52bb690f-5b81-496d-8a7b-11dd9f1aa7e7" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload[0]]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</sub-flow>
+	<sub-flow name="Schedules-Sub_Flow" doc:id="cac0557c-4ff1-436b-9836-0fa226f66fe8" >
+		<http:request method="GET" doc:name="Request-to-externalsystem" doc:id="5fe819fc-b0f2-4b10-bcc1-cf901b46adcb" config-ref="HTTP_Request_configuration" path="${requester.schedulepath}"/>
+		<ee:transform doc:name="JSON output  from externalsystem" doc:id="af7e473f-9249-4294-8d9b-70537371ceb1" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload mapObject(value,index)->
+{
+  "departureSchedules": [
+    {
+      "availableSeats": value.schedules.availableSeats[0],
+      "departureDateTime": value.schedules.departureDateTime[0],
+      "travelRoute": {
+        "destinationLocation": {
+          "locationCode": value.schedules.toLocation[0]
+        },
+        "originLocation": {
+          "locationCode": value.schedules.fromLocation[0]
+        }
+      }
+    },
+    {
+      "availableSeats": value.schedules.availableSeats[1],
+      "departureDateTime": value.schedules.departureDateTime[1],
+      "travelRoute": {
+        "destinationLocation": {
+          "locationCode": value.schedules.toLocation[0]
+        },
+        "originLocation": {
+          "locationCode": value.schedules.fromLocation[0]
+        }
+      }
+    }
+  ]
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</sub-flow>
+</mule>

@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule
+
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+    xmlns:munit="http://www.mulesoft.org/schema/mule/munit"
+
+    xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+
+    xmlns="http://www.mulesoft.org/schema/mule/core"
+
+    xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+
+    xsi:schemaLocation="
+
+        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+
+        http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+
+        http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+
+    <munit:config name="demo-test-suite.xml" />
+
+    <munit:test name="main-BAD_REQUEST-Test" doc:id="66f8e494-f3a9-4b8a-bcb1-7668d7637346" description="Test" expectedErrorType="APIKIT:BAD_REQUEST">
+
+        <munit:behavior >
+
+            <munit-tools:mock-when doc:name="Mock when APIKIT:BAD_REQUEST" doc:id="c0c11a6c-e4a0-4b5a-be64-cfff4cbd03be" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="firstcoach-sys-api-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+
+                    <munit-tools:error typeId="APIKIT:BAD_REQUEST" />
+
+                </munit-tools:then-return>
+
+            </munit-tools:mock-when>
+
+        </munit:behavior>
+
+        <munit:execution >
+
+            <flow-ref doc:name="Flow-ref to demo-main" doc:id="254b020f-7796-41a9-a0f2-430fbc7aa103" name="firstcoach-sys-api-main"/>
+
+        </munit:execution>
+
+        <munit:validation >
+
+            <munit-tools:assert-equals doc:name="Assert equals" doc:id="54c7ee40-c00c-46b0-a319-6d6e0ebf2e84" actual="#[vars.httpStatus]" expected="#[400]"/>
+
+        </munit:validation>
+
+    </munit:test>
+
+    <munit:test name="main-NOT_FOUND-Test" doc:id="faabe7f3-98ed-45d8-8113-7e9a1037ae0c" description="Test" expectedErrorType="APIKIT:NOT_FOUND">
+
+        <munit:behavior >
+
+            <munit-tools:mock-when doc:name="Mock when APIKIT:NOT_FOUND" doc:id="4a1a913b-1f4d-4007-8f30-5c4fdcae4002" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="firstcoach-sys-api-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+
+                    <munit-tools:error typeId="APIKIT:NOT_FOUND" />
+
+                </munit-tools:then-return>
+
+            </munit-tools:mock-when>
+
+        </munit:behavior>
+
+        <munit:execution >
+
+            <flow-ref doc:name="Flow Reference" doc:id="db1e10d7-4e74-4e6b-9988-f40b06142fd1" name="firstcoach-sys-api-main"/>
+
+        </munit:execution>
+
+        <munit:validation >
+
+            <munit-tools:assert-equals doc:name="Assert equals" doc:id="3d75c1e8-894f-4555-b9f4-2de8e05d46b7" actual="#[vars.httpStatus]" expected="#[404]"/>
+
+        </munit:validation>
+
+    </munit:test>
+
+    <munit:test name="main-METHOD_NOT_ALLOWED-Test" doc:id="cf72d137-bc44-4ae7-bf2f-14c3c18bb410" description="Test" expectedErrorType="APIKIT:METHOD_NOT_ALLOWED">
+
+        <munit:behavior >
+
+            <munit-tools:mock-when doc:name="Mock when APIKIT:METHOD_NOT_ALLOWED" doc:id="6af191e7-473b-4da6-aa88-470049e3589a" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="firstcoach-sys-api-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+
+                    <munit-tools:error typeId="APIKIT:METHOD_NOT_ALLOWED" />
+
+                </munit-tools:then-return>
+
+            </munit-tools:mock-when>
+
+        </munit:behavior>
+
+        <munit:execution >
+
+            <flow-ref doc:name="Flow-ref to demo-main" doc:id="faae15b5-043c-4bb0-8443-4742673b5f84" name="firstcoach-sys-api-main"/>
+
+        </munit:execution>
+
+        <munit:validation >
+
+            <munit-tools:assert-equals doc:name="Assert equals" doc:id="f2e93b81-ab91-46e3-96b6-9202fd0cccaa" actual="#[vars.httpStatus]" expected="#[405]"/>
+
+        </munit:validation>
+
+    </munit:test>
+
+    <munit:test name="main-NOT_ACCEPTABLE-Test" doc:id="0f82d9e8-7200-4773-9415-bb27bcbb8fc4" description="Test" expectedErrorType="APIKIT:NOT_ACCEPTABLE">
+
+        <munit:behavior >
+
+            <munit-tools:mock-when doc:name="Mock when APIKIT:NOT_ACCEPTABLE" doc:id="42113d8c-4f54-41c7-bc42-3c437a33cdc2" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="firstcoach-sys-api-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+
+                    <munit-tools:error typeId="APIKIT:NOT_ACCEPTABLE" />
+
+                </munit-tools:then-return>
+
+            </munit-tools:mock-when>
+
+        </munit:behavior>
+
+        <munit:execution >
+
+            <flow-ref doc:name="Flow Reference" doc:id="3a403c03-e10a-45e3-a5a0-5881f8d2dd98" name="firstcoach-sys-api-main"/>
+
+        </munit:execution>
+
+        <munit:validation >
+
+            <munit-tools:assert-equals doc:name="Assert equals" doc:id="4648ddee-c1a2-4c34-bf28-438b69057132" actual="#[vars.httpStatus]" expected="#[406]"/>
+
+        </munit:validation>
+
+    </munit:test>
+
+    <munit:test name="main-UNSUPPORTED_MEDIA_TYPE-Test" doc:id="d4042e83-9b7d-47d6-ae5e-24849b7b7164" description="Test" expectedErrorType="APIKIT:UNSUPPORTED_MEDIA_TYPE">
+
+        <munit:behavior >
+
+            <munit-tools:mock-when doc:name="Mock when APIKIT:UNSUPPORTED_MEDIA_TYPE" doc:id="7db626c0-0902-4b3c-ada1-75b47b352aad" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="firstcoach-sys-api-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+
+                    <munit-tools:error typeId="APIKIT:UNSUPPORTED_MEDIA_TYPE" />
+
+                </munit-tools:then-return>
+
+            </munit-tools:mock-when>
+
+        </munit:behavior>
+
+        <munit:execution >
+
+            <flow-ref doc:name="Flow-ref to demo-main" doc:id="f54005b0-699f-4b28-aad3-16b8facb7e46" name="firstcoach-sys-api-main"/>
+
+        </munit:execution>
+
+        <munit:validation >
+
+            <munit-tools:assert-equals doc:name="Assert equals" doc:id="56a74897-ff63-40a9-a9ba-d5788f5c650d" actual="#[vars.httpStatus]" expected="#[415]"/>
+
+        </munit:validation>
+
+    </munit:test>
+
+    <munit:test name="main-NOT_IMPLEMENTED-Test" doc:id="ed39ed7f-2628-4aa5-b4f6-94c7ca0d4bff" description="Test" expectedErrorType="APIKIT:NOT_IMPLEMENTED">
+
+        <munit:behavior >
+
+            <munit-tools:mock-when doc:name="Mock when APIKIT:NOT_IMPLEMENTED" doc:id="28b52afa-dac0-412e-a0af-165acb3ca02e" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="firstcoach-sys-api-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+
+                    <munit-tools:error typeId="APIKIT:NOT_IMPLEMENTED" />
+
+                </munit-tools:then-return>
+
+            </munit-tools:mock-when>
+
+        </munit:behavior>
+
+        <munit:execution >
+
+            <flow-ref doc:name="Flow-ref to demo-main" doc:id="a6c78f76-a3b8-4158-904a-70e999063f86" name="firstcoach-sys-api-main"/>
+
+        </munit:execution>
+
+        <munit:validation >
+
+            <munit-tools:assert-equals doc:name="Assert equals" doc:id="e5303690-2b25-4414-a848-9e41a37b9d2f" actual="#[vars.httpStatus]" expected="#[501]"/>
+
+        </munit:validation>
+
+    </munit:test>
+	<munit:test name="firstcoach-sys-api-consoleTest" doc:id="dba88bd6-d6e4-4aaa-9905-2b35447dad28" description="Test" expectedErrorType="APIKIT:NOT_FOUND">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when APIKIT:NOT_FOUND" doc:id="fd0512fb-448c-48e0-af8b-610261462c33" processor="apikit:console">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="firstcoach-sys-api-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:NOT_FOUND" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to transportsystem-proc-api-console" doc:id="28a07af6-d1e7-4607-8d9b-d9253c5a4ea4" name="firstcoach-sys-api-console"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="e0d6b5a6-2a6f-429f-83de-6249753978c6" actual="#[vars.httpStatus]" expected="#[404]"/>
+		</munit:validation>
+	</munit:test>
+
+</mule>
+
